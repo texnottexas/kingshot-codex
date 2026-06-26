@@ -228,6 +228,47 @@ footer .shortlinks a{padding:.32rem .65rem;border-radius:999px;
   text-decoration:none}
 footer .shortlinks a:hover{background:oklch(0.74 0.13 73 / .2)}
 
+/* ============ language switcher ============ */
+body > .skiptranslate{display:none !important}
+.goog-te-banner-frame.skiptranslate{display:none !important}
+#google_translate_element{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;overflow:hidden;pointer-events:none}
+
+.lang-fab{position:fixed;top:23px;right:clamp(.8rem,3vw,1.4rem);z-index:130;transform:translateY(-50%);
+  display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;
+  font-family:"Cinzel",serif;font-weight:700;font-size:.78rem;letter-spacing:.08em;
+  color:var(--iron);background:linear-gradient(180deg,var(--gold-bright),var(--gold));
+  border:1px solid var(--gold-deep);border-radius:999px;padding:.4rem .72rem;
+  box-shadow:0 4px 14px -5px oklch(0.25 0.06 50 / .8), inset 0 1px 0 #fff8;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease)}
+.lang-fab:hover{transform:translateY(calc(-50% - 1px));box-shadow:0 9px 22px -7px oklch(0.25 0.06 50 / .85), inset 0 1px 0 #fff9}
+.lang-fab .flag{font-size:1.05rem;line-height:1}
+@media(max-width:600px){.lang-fab .code{display:none}.lang-fab{padding:.5rem .55rem}}
+
+.lang-overlay{display:none;position:fixed;inset:0;z-index:200;
+  background:oklch(0.12 0.02 50 / .68);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;padding:1.2rem}
+.lang-overlay.active{display:flex}
+.lang-dialog{position:relative;border-radius:16px;padding:1.4rem;
+  max-width:460px;width:100%;max-height:82vh;overflow-y:auto;
+  background:linear-gradient(180deg, oklch(0.97 0.015 82), oklch(0.92 0.026 76)) padding-box,
+    linear-gradient(135deg, var(--gold), var(--gold-deep) 50%, var(--gold-bright)) border-box;
+  border:2px solid transparent;box-shadow:0 30px 60px -24px #000b}
+.lang-dialog-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.lang-dialog-head h3{font-family:"Cinzel";font-size:1.05rem;letter-spacing:.06em;color:var(--ink)}
+.lang-close{background:none;border:none;color:var(--ink-faint);font-size:1.3rem;line-height:1;
+  cursor:pointer;padding:.1rem .4rem;border-radius:8px}
+.lang-close:hover{color:var(--ember);background:oklch(0.86 0.04 60 / .6)}
+.lang-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
+@media(max-width:480px){.lang-grid{grid-template-columns:1fr}}
+.lang-opt{display:flex;align-items:center;gap:.6rem;padding:.55rem .7rem;border-radius:10px;
+  border:1px solid var(--parch-edge);background:#fff7;cursor:pointer;
+  font-family:"Spectral",serif;font-size:.92rem;color:var(--ink);text-align:left;
+  transition:border-color .15s, background .15s, transform .15s}
+.lang-opt:hover{border-color:var(--gold);background:#fff;transform:translateY(-1px)}
+.lang-opt.active{border-color:var(--gold-deep);background:linear-gradient(180deg,oklch(0.95 0.05 82),oklch(0.9 0.06 78))}
+.lang-opt .flag{font-size:1.15rem;line-height:1}
+.lang-opt .name{flex:1}
+
 /* reveal */
 [data-rv]{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease), transform .8s var(--ease)}
 [data-rv].in{opacity:1;transform:none}
@@ -241,6 +282,20 @@ footer .shortlinks a:hover{background:oklch(0.74 0.13 73 / .2)}
 </style>
 </head>
 <body class="grain">
+
+<button class="lang-fab notranslate" id="langFab" aria-haspopup="dialog" aria-label="Change language">
+  <span class="flag" id="langFlag">🇺🇸</span><span class="code" id="langCode">EN</span>
+</button>
+<div class="lang-overlay" id="langOverlay" role="dialog" aria-modal="true" aria-label="Select language">
+  <div class="lang-dialog">
+    <div class="lang-dialog-head">
+      <h3 class="notranslate">Select Language</h3>
+      <button class="lang-close notranslate" id="langClose" aria-label="Close">✕</button>
+    </div>
+    <div class="lang-grid" id="langGrid"></div>
+  </div>
+</div>
+<div id="google_translate_element" aria-hidden="true"></div>
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
@@ -454,5 +509,134 @@ footer .shortlinks a:hover{background:oklch(0.74 0.13 73 / .2)}
   document.querySelectorAll('[data-rv]').forEach(function(n){io.observe(n);});
 })();
 </script>
+
+<!-- ============ language switcher ============ -->
+<script>
+(function(){
+  var LANGUAGES = [
+    {code:'en',    flag:'🇺🇸', name:'English'},
+    {code:'es',    flag:'🇪🇸', name:'Español'},
+    {code:'fr',    flag:'🇫🇷', name:'Français'},
+    {code:'de',    flag:'🇩🇪', name:'Deutsch'},
+    {code:'pt',    flag:'🇧🇷', name:'Português'},
+    {code:'it',    flag:'🇮🇹', name:'Italiano'},
+    {code:'ru',    flag:'🇷🇺', name:'Русский'},
+    {code:'ja',    flag:'🇯🇵', name:'日本語'},
+    {code:'ko',    flag:'🇰🇷', name:'한국어'},
+    {code:'zh-CN', flag:'🇨🇳', name:'中文'},
+    {code:'ar',    flag:'🇸🇦', name:'العربية'},
+    {code:'tr',    flag:'🇹🇷', name:'Türkçe'},
+    {code:'vi',    flag:'🇻🇳', name:'Tiếng Việt'},
+    {code:'th',    flag:'🇹🇭', name:'ไทย'},
+    {code:'hi',    flag:'🇮🇳', name:'हिन्दी'},
+    {code:'pl',    flag:'🇵🇱', name:'Polski'},
+    {code:'uk',    flag:'🇺🇦', name:'Українська'},
+    {code:'id',    flag:'🇮🇩', name:'Indonesia'}
+  ];
+  var overlay = document.getElementById('langOverlay'),
+      grid    = document.getElementById('langGrid'),
+      fab     = document.getElementById('langFab'),
+      flagEl  = document.getElementById('langFlag'),
+      codeEl  = document.getElementById('langCode');
+
+  function dataFor(code){
+    var base=(code||'en').split('-')[0];
+    for(var i=0;i<LANGUAGES.length;i++){
+      if(LANGUAGES[i].code===code || LANGUAGES[i].code===base) return LANGUAGES[i];
+    }
+    return null;
+  }
+  function detect(){
+    var m=document.cookie.match(/googtrans=\/en\/([a-zA-Z-]{2,10})/);
+    return (m && m[1]) ? m[1] : 'en';
+  }
+  var RTL_BASES={ar:1,he:1,fa:1,ur:1};
+  function applyDir(code){
+    var base=(code||'en').split('-')[0];
+    document.documentElement.dir=RTL_BASES[base]?'rtl':'ltr';
+  }
+  function updateBtn(code){
+    var d=dataFor(code);
+    flagEl.textContent=d?d.flag:'🌐';
+    codeEl.textContent=(d?d.code:code).split('-')[0].toUpperCase();
+    var opts=grid.querySelectorAll('.lang-opt');
+    for(var i=0;i<opts.length;i++) opts[i].classList.toggle('active', opts[i].getAttribute('data-lang')===code);
+    applyDir(code);
+  }
+  function applyToCombo(code,delay){
+    var n=0, poll=setInterval(function(){
+      var combo=document.querySelector('.goog-te-combo');
+      if(combo){combo.value=code; combo.dispatchEvent(new Event('change')); clearInterval(poll); updateBtn(code);}
+      if(++n>40){ clearInterval(poll); try{console.warn('Google Translate combo not ready after 8s; language change may not have applied.');}catch(e){} }
+    }, delay||200);
+  }
+  window.applyToCombo=applyToCombo;
+
+  var lastFocus=null;
+  function focusables(){ return overlay.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])'); }
+  function openModal(){
+    lastFocus=document.activeElement;
+    overlay.classList.add('active');
+    var first=focusables()[0];
+    if(first) first.focus();
+  }
+  function closeModal(){
+    overlay.classList.remove('active');
+    if(lastFocus && typeof lastFocus.focus==='function') lastFocus.focus();
+  }
+  function trapTab(e){
+    if(e.key!=='Tab' || !overlay.classList.contains('active')) return;
+    var f=focusables(); if(!f.length) return;
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  }
+  function restoreEnglish(){
+    try{sessionStorage.removeItem('pendingLang');}catch(e){}
+    document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax';
+    document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain='+location.hostname+'; SameSite=Lax';
+    closeModal(); location.reload();
+  }
+  function select(code){
+    if(code==='en'){restoreEnglish(); return;}
+    try{sessionStorage.setItem('pendingLang',code);}catch(e){}
+    applyToCombo(code,200); closeModal();
+  }
+
+  var detected=detect();
+  applyDir(detected);
+  LANGUAGES.forEach(function(l){
+    var b=document.createElement('button');
+    b.className='lang-opt notranslate'+(l.code===detected?' active':'');
+    b.setAttribute('data-lang',l.code);
+    b.setAttribute('type','button');
+    var f=document.createElement('span'); f.className='flag'; f.textContent=l.flag; f.setAttribute('aria-hidden','true');
+    var n=document.createElement('span'); n.className='name'; n.textContent=l.name;
+    b.appendChild(f); b.appendChild(n);
+    grid.appendChild(b);
+  });
+  grid.addEventListener('click',function(e){
+    var b=e.target.closest('.lang-opt'); if(!b) return;
+    select(b.getAttribute('data-lang'));
+  });
+  updateBtn(detected);
+
+  fab.addEventListener('click',openModal);
+  document.getElementById('langClose').addEventListener('click',closeModal);
+  overlay.addEventListener('click',function(e){if(e.target===overlay) closeModal();});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape' && overlay.classList.contains('active')) closeModal();
+    else trapTab(e);
+  });
+})();
+
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'en',autoDisplay:false},'google_translate_element');
+  var pending=null;
+  try{pending=sessionStorage.getItem('pendingLang'); sessionStorage.removeItem('pendingLang');}catch(e){}
+  if(pending) window.applyToCombo(pending,250);
+}
+</script>
+<script async src="https://translate.googleapis.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
