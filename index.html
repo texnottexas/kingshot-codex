@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data: https://www.gstatic.com https://fonts.gstatic.com https://translate.googleapis.com https://translate.google.com https://www.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com https://translate.googleapis.com; script-src 'self' 'unsafe-inline' https://translate.googleapis.com https://translate.google.com https://translate-pa.googleapis.com https://www.gstatic.com; font-src https://fonts.gstatic.com; connect-src 'self' https://translate.googleapis.com https://translate-pa.googleapis.com https://translate.google.com; frame-src 'self' https://translate.google.com; object-src 'none'; base-uri 'self'; form-action 'none';">
+<title>The Kingshot Codex - Summer's Guides for Kingshot</title>
+<meta name="description" content="A hub for the Kingshot guides scribed by Summer ([ABG], Kingdom 356) and useful in any Kingshot kingdom: forging, garrison, bear hunt, and the rally-capacity calculator.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --parch:      oklch(0.945 0.022 80);
+  --parch-2:    oklch(0.905 0.030 76);
+  --parch-edge: oklch(0.83 0.038 70);
+  --ink:        oklch(0.265 0.020 52);
+  --ink-soft:   oklch(0.44 0.022 56);
+  --ink-faint:  oklch(0.58 0.020 60);
+  --gold:       oklch(0.74 0.130 73);
+  --gold-deep:  oklch(0.565 0.115 62);
+  --gold-bright:oklch(0.85 0.125 84);
+  --ember:      oklch(0.515 0.200 32);
+  --ember-br:   oklch(0.625 0.215 38);
+  --iron:       oklch(0.185 0.020 55);
+  --iron-2:     oklch(0.245 0.022 56);
+  --iron-3:     oklch(0.315 0.022 58);
+  /* per-guide accent tints (used on dark embossment header) */
+  --gear:       oklch(0.74 0.130 73);
+  --garrison:   oklch(0.56 0.115 236);
+  --hunt:       oklch(0.515 0.200 32);
+  --rally:      oklch(0.56 0.130 145);
+  /* darker on-parchment text variants (WCAG-readable on cream) */
+  --gold-text:      oklch(0.42 0.115 62);
+  --gear-text:      oklch(0.42 0.115 62);
+  --garrison-text:  oklch(0.40 0.130 236);
+  --hunt-text:      oklch(0.40 0.180 32);
+  --rally-text:     oklch(0.38 0.130 145);
+
+  --maxw: 1180px;
+  --gap: clamp(1rem, 3vw, 2.6rem);
+  --ease: cubic-bezier(.16,1,.3,1);
+
+  --fs-body: clamp(1.02rem, 0.97rem + 0.32vw, 1.2rem);
+  --fs-lead: clamp(1.18rem, 1.05rem + 0.7vw, 1.6rem);
+  --fs-h2:   clamp(2rem, 1.3rem + 3.1vw, 3.7rem);
+  --fs-mega: clamp(3.2rem, 1.4rem + 9vw, 8rem);
+
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  font-family:"Spectral",Georgia,serif;
+  font-size:var(--fs-body);
+  line-height:1.62;
+  color:var(--ink);
+  background:var(--parch);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;height:auto}
+
+.grain::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:var(--noise);
+  background-size:220px 220px;
+  mix-blend-mode:multiply;opacity:.05;z-index:1;
+}
+
+h1,h2,h3{font-family:"Cinzel",serif;font-weight:700;letter-spacing:.01em;line-height:1.06}
+strong,b{font-weight:700;color:inherit}
+em{font-style:italic}
+a{color:inherit}
+
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(1.1rem,4vw,2.4rem)}
+
+/* ============ hero ============ */
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;
+  background:
+    radial-gradient(120% 80% at 75% 25%, oklch(0.4 0.06 60 / .55), transparent 60%),
+    radial-gradient(85% 70% at 18% 75%, oklch(0.45 0.16 32 / .42), transparent 65%),
+    linear-gradient(160deg, oklch(0.16 0.02 50) 0%, oklch(0.21 0.04 48) 55%, oklch(0.18 0.03 44) 100%);
+  color:var(--parch);overflow:hidden;text-align:center;padding-block:6rem 4.4rem;
+}
+.hero::before{
+  content:"";position:absolute;inset:-10%;
+  background:var(--noise);background-size:220px 220px;
+  opacity:.08;mix-blend-mode:overlay;pointer-events:none;
+}
+.hero .wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1.4rem}
+
+.kicker{display:inline-flex;align-items:center;gap:.7rem;
+  font-family:"Cinzel";font-weight:700;font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold-bright);padding:.4rem .95rem;border-radius:99px;
+  background:linear-gradient(180deg, oklch(0.74 0.13 73 / .14), oklch(0.74 0.13 73 / .06));
+  border:1px solid oklch(0.74 0.13 73 / .3)}
+.kicker svg{width:18px;height:18px}
+
+.hero h1{font-size:var(--fs-mega);max-width:18ch}
+.hero h1 .small{display:block;font-family:"Cinzel";font-weight:500;font-size:.3em;letter-spacing:.42em;
+  color:oklch(0.78 0.05 78 / .85);text-transform:uppercase;margin-bottom:.6rem}
+.hero h1 .word{background:linear-gradient(180deg, var(--gold-bright), var(--gold) 60%, var(--gold-deep));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  display:inline-block;padding-right:.06em;
+  filter:drop-shadow(0 4px 18px oklch(0.74 0.13 73 / .35))}
+
+.hero .blurb{font-size:var(--fs-lead);color:oklch(0.86 0.02 78);max-width:54ch;line-height:1.5}
+.hero .byline{display:inline-flex;align-items:center;gap:.85rem;font-size:.95rem;color:oklch(0.78 0.02 75);
+  padding:.55rem 1.1rem;border-radius:99px;background:oklch(0.16 0.02 50 / .35);
+  border:1px solid oklch(0.74 0.13 73 / .18)}
+.hero .seal{width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(140deg, var(--gold-bright), var(--gold-deep));
+  display:grid;place-items:center;font-family:"Cinzel";font-weight:800;color:var(--iron);
+  box-shadow:0 4px 14px -4px oklch(0.74 0.13 73 / .6), inset 0 1px 0 #fff7;font-size:.85rem}
+
+/* hero ornament */
+.hero-orn{display:flex;align-items:center;gap:1.2rem;margin-top:.3rem}
+.hero-orn .ln{width:clamp(40px,12vw,90px);height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent)}
+.hero-orn .star{color:var(--gold-bright);font-size:1.1rem;filter:drop-shadow(0 0 10px var(--gold))}
+
+/* ============ section ============ */
+.sec{padding-block:clamp(3.6rem,7vw,6.2rem);position:relative}
+.sec .wrap{position:relative;z-index:2}
+.sec-eyebrow{display:inline-flex;align-items:center;gap:.6rem;
+  font-family:"Cinzel";font-weight:600;font-size:.72rem;letter-spacing:.36em;text-transform:uppercase;
+  color:var(--gold-text);margin-bottom:1rem}
+.sec-eyebrow::before{content:"";width:34px;height:2px;background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright))}
+.sec h2{font-size:var(--fs-h2);margin-bottom:.7rem;color:var(--ink);max-width:20ch}
+.sec h2 .accent{background:linear-gradient(180deg,var(--gold-text),oklch(0.34 0.115 62));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  display:inline-block;padding-right:.04em}
+.sec .lead{font-size:var(--fs-lead);color:var(--ink-soft);max-width:62ch;margin-bottom:2.4rem;line-height:1.55}
+
+/* ============ guide cards ============ */
+.guide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1rem,2.4vw,1.8rem)}
+@media(max-width:760px){.guide-grid{grid-template-columns:1fr}}
+
+.guide{position:relative;display:flex;flex-direction:column;
+  background:linear-gradient(180deg,#fff,oklch(0.96 0.018 80));
+  border:1px solid var(--parch-edge);border-radius:18px;overflow:hidden;
+  box-shadow:0 18px 38px -22px oklch(0.25 0.06 60 / .55), 0 1px 0 #fff inset;
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+}
+.guide:hover{transform:translateY(-4px);
+  box-shadow:0 28px 54px -22px oklch(0.25 0.06 60 / .65), 0 1px 0 #fff inset;
+  border-color:var(--gold)}
+.guide-link{position:absolute;inset:0;text-decoration:none;color:inherit;z-index:1;
+  border-radius:18px;outline:none}
+.guide-link:focus-visible{outline:3px solid var(--gold-deep);outline-offset:-3px}
+.guide-link span.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+.guide .emb{position:relative;padding:1.4rem 1.4rem .9rem;display:flex;align-items:center;gap:1rem;
+  background:linear-gradient(135deg, oklch(0.18 0.02 50), oklch(0.13 0.02 50));color:var(--parch);
+  border-bottom:1px solid var(--parch-edge)}
+.guide .emb::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(60% 80% at 100% 0%, color-mix(in oklab, var(--g-accent, var(--gold)) 25%, transparent), transparent 60%);
+  pointer-events:none}
+.guide .icon{width:54px;height:54px;border-radius:14px;flex-shrink:0;position:relative;z-index:2;
+  background:linear-gradient(180deg, oklch(0.74 0.13 73 / .18), oklch(0.74 0.13 73 / .05));
+  border:1px solid var(--g-accent, var(--gold-deep));
+  display:grid;place-items:center;color:var(--g-accent, var(--gold-bright));
+  box-shadow:inset 0 1px 0 #fff2, 0 6px 14px -6px oklch(0.25 0.06 50 / .8)}
+.guide .icon svg{width:30px;height:30px}
+.guide .heading{position:relative;z-index:2}
+.guide .num{font-family:"Cinzel";font-weight:600;font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+  color:oklch(0.78 0.04 78 / .8);margin-bottom:.22rem}
+.guide h3{font-family:"Cinzel";font-size:1.45rem;color:var(--parch);
+  background:linear-gradient(180deg, var(--parch), oklch(0.85 0.04 78));
+  -webkit-background-clip:text;background-clip:text;
+  text-shadow:0 1px 0 #0006}
+
+.guide .body{padding:1.2rem 1.4rem 1.4rem;flex:1;display:flex;flex-direction:column;gap:.85rem}
+.guide .desc{color:var(--ink-soft);font-size:.98rem;line-height:1.55;flex:1}
+.guide .meta{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;font-size:.78rem;color:var(--ink-faint);
+  font-family:"Cinzel";letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.guide .meta .dot{width:5px;height:5px;border-radius:50%;background:var(--g-accent, var(--gold-deep));
+  box-shadow:0 0 6px var(--g-accent, var(--gold))}
+.guide .open{display:inline-flex;align-items:center;gap:.5rem;font-family:"Cinzel";font-weight:700;
+  font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g-text, var(--gold-text));
+  padding-top:.3rem;border-top:1px dashed var(--parch-edge)}
+.guide:hover .open .arrow{transform:translateX(4px)}
+.guide .open .arrow{transition:transform .25s var(--ease)}
+
+.guide .alt{display:flex;flex-wrap:wrap;gap:.4rem;font-size:.74rem;position:relative;z-index:2}
+.guide .alt-link{font-family:"Cinzel";font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  font-size:.7rem;color:var(--ink-soft);text-decoration:none;padding:.3rem .6rem;border-radius:999px;
+  background:oklch(0.94 0.04 80);border:1px solid var(--parch-edge);
+  transition:color .2s, border-color .2s, background .2s}
+.guide .alt-link:hover{color:var(--ink);border-color:var(--g-accent, var(--gold-deep));background:#fff}
+.guide .alt-link:focus-visible{outline:2px solid var(--gold-deep);outline-offset:2px}
+
+/* per-guide accent */
+.guide[data-g="gear"]    { --g-accent: var(--gear);     --g-text: var(--gear-text) }
+.guide[data-g="garrison"]{ --g-accent: var(--garrison); --g-text: var(--garrison-text) }
+.guide[data-g="hunt"]    { --g-accent: var(--hunt);     --g-text: var(--hunt-text) }
+.guide[data-g="rally"]   { --g-accent: var(--rally);    --g-text: var(--rally-text) }
+
+/* ============ how-to-use strip ============ */
+.howto{background:linear-gradient(180deg, oklch(0.93 0.025 76), oklch(0.945 0.022 80));position:relative}
+.howto-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.9rem,2vw,1.4rem);margin-top:1.6rem}
+@media(max-width:920px){.howto-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.howto-grid{grid-template-columns:1fr}}
+.howto-card{background:#fff;border:1px solid var(--parch-edge);border-radius:14px;padding:1.1rem 1.2rem;
+  display:flex;flex-direction:column;gap:.5rem}
+.howto-card .step{font-family:"Cinzel";font-weight:700;font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-text)}
+.howto-card h4{font-family:"Cinzel";font-size:1.05rem;color:var(--ink);font-weight:700}
+.howto-card p{font-size:.93rem;color:var(--ink-soft);line-height:1.5}
+
+/* ============ footer ============ */
+footer{background:linear-gradient(180deg, oklch(0.18 0.02 50), oklch(0.13 0.02 48));
+  color:oklch(0.82 0.025 78);padding:3rem 0 2.4rem;margin-top:0;
+  border-top:1px solid oklch(0.74 0.13 73 / .25);position:relative;text-align:center}
+footer h3{font-family:"Cinzel";font-size:1.2rem;color:var(--gold-bright);margin-bottom:.6rem;letter-spacing:.06em}
+footer p{max-width:58ch;margin:0 auto .6rem;font-size:.95rem;line-height:1.6}
+footer .credit{font-size:.85rem;color:oklch(0.7 0.02 78);margin-top:.9rem;letter-spacing:.04em}
+footer a{color:var(--gold-bright);text-decoration:none;border-bottom:1px dashed oklch(0.74 0.13 73 / .4)}
+footer a:hover{color:var(--gold);border-bottom-color:var(--gold-bright)}
+footer .shortlinks{display:flex;flex-wrap:wrap;gap:.5rem .8rem;justify-content:center;margin:1.1rem 0 0;font-size:.78rem;
+  font-family:"Cinzel";font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+footer .shortlinks a{padding:.32rem .65rem;border-radius:999px;
+  background:oklch(0.74 0.13 73 / .1);border:1px solid oklch(0.74 0.13 73 / .25);
+  text-decoration:none}
+footer .shortlinks a:hover{background:oklch(0.74 0.13 73 / .2)}
+
+/* reveal */
+[data-rv]{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease), transform .8s var(--ease)}
+[data-rv].in{opacity:1;transform:none}
+[data-rv].d1{transition-delay:.08s}
+[data-rv].d2{transition-delay:.16s}
+[data-rv].d3{transition-delay:.24s}
+[data-rv].d4{transition-delay:.32s}
+@media (prefers-reduced-motion:reduce){
+  [data-rv]{opacity:1!important;transform:none!important;transition:none!important}
+}
+</style>
+</head>
+<body class="grain">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <span class="kicker" data-rv>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 4.8L20 8l-4 3.6L17 18l-5-3-5 3 1-6.4L4 8l5.6-1.2z"/></svg>
+      The full series
+    </span>
+    <h1 class="d1" data-rv>
+      <span class="small">Summer's Guides for Kingshot</span>
+      <span class="word">The Codex</span>
+    </h1>
+    <p class="blurb d2" data-rv>Four self-contained guides covering the fights that matter most - the forge, the wall, the bear, and the rally - with a calculator to put the rally math to work.</p>
+    <span class="byline d3" data-rv>
+      <span class="seal">S</span>
+      <span>Scribed by <b>Summer</b> · Alliance <b>[ABG]</b> · Kingdom 356</span>
+    </span>
+    <div class="hero-orn d4" data-rv>
+      <span class="ln"></span><span class="star">✦</span><span class="ln"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUIDES ============ -->
+<section class="sec" id="guides">
+  <div class="wrap">
+    <div class="sec-eyebrow" data-rv>The Series</div>
+    <h2 data-rv>The full <span class="accent">Kingshot</span> shelf</h2>
+    <p class="lead d1" data-rv>Each guide stands alone. Pick the one your alliance is asking about, send the link, and the cross-links at the bottom of each page lead to the rest. Useful in any server, any alliance, any kingdom.</p>
+
+    <div class="guide-grid">
+
+      <!-- GEAR -->
+      <article class="guide" data-g="gear" data-rv>
+        <a class="guide-link" href="https://texnottexas.github.io/kingshot-gear-guide/" aria-label="Open"><span class="sr">Open</span></a>
+        <div class="emb">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 24h22"/>
+              <path d="M10 24l-2-5h4l1-4h6l1 4h4l-2 5"/>
+              <path d="M11 11l5-5 5 5-2 4h-6z"/>
+              <path d="M14 6l2-3 2 3"/>
+            </svg>
+          </div>
+          <div class="heading">
+            <div class="num">Guide I</div>
+            <h3>How to Gear</h3>
+          </div>
+        </div>
+        <div class="body">
+          <p class="desc">The full forging codex: priority order, imbuement, the three-set rule, reforging, per-troop priorities, governor gear, and the charm math.</p>
+          <div class="meta">
+            <span class="dot"></span> Forging · Reforging · Charms
+          </div>
+          <span class="open">Open the gear codex <span class="arrow">→</span></span>
+        </div>
+      </article>
+
+      <!-- GARRISON -->
+      <article class="guide d1" data-g="garrison" data-rv>
+        <a class="guide-link" href="https://texnottexas.github.io/kingshot-garrison/" aria-label="Open"><span class="sr">Open</span></a>
+        <div class="emb">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 26h24"/>
+              <path d="M5 26V14l3 1.5V14l3 1.5V12l3 1.5V10l3 1.5V12l3 1.5V14l3 1.5V14l3 1.5v10.5"/>
+              <path d="M13 26v-6h6v6"/>
+            </svg>
+          </div>
+          <div class="heading">
+            <div class="num">Guide II</div>
+            <h3>How 2 Garrison</h3>
+          </div>
+        </div>
+        <div class="body">
+          <p class="desc">Defending your castle through every wave: troop ratios, the only skill that matters, defensive heroes, reading the battle report, batch healing, and R4/R5 management.</p>
+          <div class="meta">
+            <span class="dot"></span> Defense · Healing · Heroes
+          </div>
+          <div class="alt">
+            <a class="alt-link" href="https://texnottexas.github.io/kingshot-garrison/v2.html">Field Manual ↗</a>
+          </div>
+          <span class="open">Open the garrison codex <span class="arrow">→</span></span>
+        </div>
+      </article>
+
+      <!-- BEAR HUNT -->
+      <article class="guide d2" data-g="hunt" data-rv>
+        <a class="guide-link" href="https://texnottexas.github.io/kingshot-bear-hunt/" aria-label="Open"><span class="sr">Open</span></a>
+        <div class="emb">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="16" cy="17" r="7"/>
+              <circle cx="10" cy="10" r="2.4"/>
+              <circle cx="22" cy="10" r="2.4"/>
+              <circle cx="13.5" cy="16" r=".8" fill="currentColor"/>
+              <circle cx="18.5" cy="16" r=".8" fill="currentColor"/>
+              <path d="M14.5 20c.5.6 1 .8 1.5.8s1-.2 1.5-.8"/>
+              <path d="M16 18.4l-.8 1h1.6z" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="heading">
+            <div class="num">Guide III</div>
+            <h3>How 2 Bear Hunt</h3>
+          </div>
+        </div>
+        <div class="body">
+          <p class="desc">Eight chapters on the bear: who to join, the only skill, tier and avoid lists, the multiplicative damage math, balancing, and formations. The math is the centerpiece.</p>
+          <div class="meta">
+            <span class="dot"></span> Joining · Damage Math · Formations
+          </div>
+          <div class="alt">
+            <a class="alt-link" href="https://texnottexas.github.io/kingshot-bear-hunt/v2.html">Field Manual ↗</a>
+          </div>
+          <span class="open">Open the bear-hunt codex <span class="arrow">→</span></span>
+        </div>
+      </article>
+
+      <!-- RALLY CAPACITY -->
+      <article class="guide d3" data-g="rally" data-rv>
+        <a class="guide-link" href="https://texnottexas.github.io/kingshot-rally-capacity/" aria-label="Open"><span class="sr">Open</span></a>
+        <div class="emb">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="16" cy="16" r="11"/>
+              <circle cx="16" cy="16" r="6"/>
+              <circle cx="16" cy="16" r="1.4" fill="currentColor"/>
+              <path d="M16 2v3M16 27v3M2 16h3M27 16h3"/>
+            </svg>
+          </div>
+          <div class="heading">
+            <div class="num">Tool</div>
+            <h3>Rally Capacity</h3>
+          </div>
+        </div>
+        <div class="body">
+          <p class="desc">An interactive calculator for bear-hunt callers: drop in your leaders' Rally Capacities and how many allies are online, get a Recommended and a Safe joiner march size so the rally fills every slot.</p>
+          <div class="meta">
+            <span class="dot"></span> Calculator · Coordination · 14-joiner split
+          </div>
+          <span class="open">Open the rally tool <span class="arrow">→</span></span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW TO USE ============ -->
+<section class="sec howto">
+  <div class="wrap">
+    <div class="sec-eyebrow" data-rv>For Alliance Leaders</div>
+    <h2 data-rv>How to <span class="accent">share</span></h2>
+    <p class="lead d1" data-rv>Hand a single link to your kingdom and let everyone find the rest from the cross-link strip at the bottom of each guide.</p>
+    <div class="howto-grid">
+      <div class="howto-card" data-rv>
+        <div class="step">Step 1</div>
+        <h4>Send the codex link</h4>
+        <p>Drop <b>texnottexas.github.io/kingshot-codex</b> into chat. Newcomers land here, see every guide at a glance, and pick what they need.</p>
+      </div>
+      <div class="howto-card d1" data-rv>
+        <div class="step">Step 2</div>
+        <h4>Pin per topic</h4>
+        <p>For specific questions, deep-link straight to the guide that answers it - the gear codex for forging, the garrison codex for defense, and so on.</p>
+      </div>
+      <div class="howto-card d2" data-rv>
+        <div class="step">Step 3</div>
+        <h4>Plan with the tool</h4>
+        <p>Before bear hunts, screenshot the rally-capacity tool with your leaders' numbers so joiners know exactly what to march with.</p>
+      </div>
+      <div class="howto-card d3" data-rv>
+        <div class="step">Step 4</div>
+        <h4>Re-share</h4>
+        <p>Every guide has a Google Translate flag picker in 18 languages and a mobile-friendly layout. Safe to forward alliance-wide or to a friend in another kingdom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <h3>The Kingshot Codex</h3>
+    <p>A hub for Summer's Kingshot guides. No accounts, no tracking, no ads - just the writing, the tools, and a way to share them.</p>
+    <div class="shortlinks">
+      <a href="https://texnottexas.github.io/kingshot-gear-guide/">Gear</a>
+      <a href="https://texnottexas.github.io/kingshot-garrison/">Garrison</a>
+      <a href="https://texnottexas.github.io/kingshot-bear-hunt/">Bear Hunt</a>
+      <a href="https://texnottexas.github.io/kingshot-rally-capacity/">Rally Capacity</a>
+    </div>
+    <p class="credit">Guides authored by <b>[ABG]Summer</b>, Kingdom 356. Kingshot and its assets belong to their respective owners; this is a non-commercial fan project.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('[data-rv]').forEach(function(n){n.classList.add('in');});
+    return;
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{rootMargin:'-6% 0px',threshold:.05});
+  document.querySelectorAll('[data-rv]').forEach(function(n){io.observe(n);});
+})();
+</script>
+</body>
+</html>
