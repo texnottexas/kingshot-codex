@@ -15,6 +15,11 @@ the rest from there.
 
 Each of those repos also cross-links the others in its own footer.
 
+## Tools
+
+- **[Kingshot session exporter for BlueStacks](tools/session-export/)** — ZIP download
+  and instructions for Mac and Windows. Exported login files must stay private.
+
 ## Structure
 
 - `index.html` — the entire self-contained landing page (styles + scripts inline)

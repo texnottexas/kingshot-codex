@@ -1,2 +1,8 @@
 .DS_Store
 *.log
+
+# Local session exports must never be published.
+kingshot-session.json
+kingshot-login-*/
+.venv/
+__pycache__/
